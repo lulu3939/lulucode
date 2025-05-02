@@ -1,0 +1,82 @@
+# config.yaml
+
+# Dataset settings
+data_path:
+filename: 'wtbdata_245days.csv'
+input_len: 72
+output_len: 1
+val_len: 14
+day_len: 144
+capacity: 134
+patient: 3
+
+train_days: 153
+val_days: 16
+test_days: 15
+total_days: 184
+
+# DataLoader settings
+num_workers: 2
+batch_size: 32
+
+# Training settings
+epoch: 150
+output_path: "./output"
+patience: 15
+log_per_steps: 100
+lr: 0.005
+min_lr: 1e-6
+weight_decay: 1e-5
+
+
+# Model configuration
+model:
+  type: "DBFP-Net"
+  num_nodes: 134
+  hidden_channels: 64
+  output_size: 1
+  dropout: 0.2
+  gru_layers: 3
+  bidirectional: true
+  in_features: 14
+  seg_num_x: 4
+  seg_num_y: 1
+  num_sampling: 9
+  down_sampling: 2
+  cut_freq: 5
+  flinear_sparse_num: 12
+  in_sparse_freq: 4
+  group: 1
+  in_group_freq: 4
+  flinear_individual: False
+  linear_individual: False
+
+alpha: 0.5
+threshold: 0
+
+# Loss function configuration
+loss:
+  name: "MSELoss"
+  reduction: "mean"
+
+# Optimizer configuration
+optimizer:
+  name: "AdamW"
+  beta1: 0.9
+  beta2: 0.999
+  eps: 1e-8
+
+# Learning rate scheduler
+scheduler:
+  type: "StepLR"
+  step_size: 1
+  gamma: 0.9
+
+# Graph configuration
+graph:
+  build_method: "correlation_matrix"
+  threshold: 0.3
+
+early_stopping:
+  patience: 15
+  delta: 0.0001
